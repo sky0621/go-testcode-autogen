@@ -1,0 +1,3 @@
+[filter]
+outdir = ["vendor"]
+outfile = [".*test.*"]
