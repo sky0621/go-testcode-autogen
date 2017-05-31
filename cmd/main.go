@@ -1,46 +1,41 @@
 package main
 
 import (
-	"fmt"
-	"log"
-
 	"flag"
-
+	"fmt"
+	"go/parser"
 	"go/token"
-
-	"golang.org/x/tools/go/loader"
+	"os"
+	"path/filepath"
 )
 
 func main() {
 	target := flag.String("target", "../example/sampleproject", "Parse Target")
 	flag.Parse()
 
-	//var conf loader.Config
-	conf := loader.Config{
-		Fset: token.NewFileSet(),
-	}
-	conf.CreateFromFilenames(*target)
-	prog, err := conf.Load()
-	if err != nil {
-		log.Fatal(err)
-	}
+	filepath.Walk(*target, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			panic(err)
+		}
+		if info.IsDir() {
+			return nil
+		}
 
-	fmt.Println(prog.AllPackages)
-	fmt.Println(prog.Fset)
-	//fmt.Println(prog)
+		// FIXME vendor配下を見ないようフィルタリング
+		// FIXME テストコードを見ないようフィルタリング
 
-	//fset := token.NewFileSet()
-	//filter := func(os.FileInfo) bool {
-	//	return true
-	//}
-	//pkgs, err := parser.ParseDir(fset, *target, filter, )
-	//if err != nil {
-	//	panic(err)
-	//}
+		fset := token.NewFileSet()
+		f, err := parser.ParseFile(fset, path, nil, parser.AllErrors)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("Name: %#v\n", f.Name)
+		decls := f.Decls
+		for _, decl := range decls {
+			fmt.Printf("decl: %#v\n", decl)
+		}
+		fmt.Println("======================================")
+		return nil
+	})
 
-	//f := &ast.File{
-	//	Name:  ast.NewIdent(*target),
-	//	Decls: []ast.Decl{},
-	//}
-	//format.Node(os.Stdout, token.NewFileSet(), f)
 }
