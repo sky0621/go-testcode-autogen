@@ -29,10 +29,17 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		fmt.Println("======================================")
 		fmt.Printf("Name: %#v\n", f.Name)
+		fmt.Printf("Comments: %#v\n", f.Comments)
+		fmt.Printf("Package: %#v\n", f.Package)
+		for _, imp := range f.Imports {
+			fmt.Printf("Imports: %#v\n", imp)
+		}
+		fmt.Println("-----------------------")
 		decls := f.Decls
 		for _, decl := range decls {
-			fmt.Printf("decl: %#v\n", decl)
+			fmt.Printf("decl: %#v\n", &decl)
 		}
 		fmt.Println("======================================")
 		return nil
