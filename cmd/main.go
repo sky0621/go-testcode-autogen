@@ -28,6 +28,7 @@ func main() {
 
 func Apply(path string, info os.FileInfo, err error) error {
 	if err != nil {
+		fmt.Println("【01】")
 		panic(err)
 	}
 
@@ -38,30 +39,23 @@ func Apply(path string, info os.FileInfo, err error) error {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, path, nil, parser.AllErrors)
 	if err != nil {
+		fmt.Println("【02】")
 		panic(err)
 	}
 
-	fmt.Println("======================================")
 	out := &TestCodeInfo{PkgName: GetPackageName(fset.Position(f.Package).Filename)}
 
-	//fmt.Printf("【%#v】\n", fset.Position(f.Package).String())
-
 	fncs := []*Function{}
+	// TODO astだけでなくtypesも駆使すれば解析の幅も広がるはず
+	// TODO importする3rdパーティモジュールに応じたプラグイン処理を入れる（aws-sdk-goがあったら特定のテストコードロジックを自動生成するなど）
 	for _, decl := range f.Decls {
 		//ast.Print(fset, decl)
 		switch declType := decl.(type) {
 		case *ast.GenDecl:
-			//for _, spec := range declType.Specs {
-			//	fmt.Printf("[GenDecl]: %#v\n", spec)
-			//}
 			switch declType.Tok {
 			// MEMO パッケージ名が取れない...
 			//case token.PACKAGE:
 			//	fmt.Printf("PACKAGE: %#v\n", declType)
-			//	case token.IMPORT:
-			//	case token.TYPE:
-			//	case token.CONST:
-			//	case token.VAR:
 			default:
 			}
 		case *ast.FuncDecl:
@@ -77,20 +71,30 @@ func Apply(path string, info os.FileInfo, err error) error {
 	}
 
 	out.Functions = fncs
-	//os.OpenFile()
 
 	tmpl := template.Must(template.ParseFiles("./testcode.md"))
 	buf := &bytes.Buffer{}
 	err = tmpl.Execute(buf, out)
 	if err != nil {
+		fmt.Printf("【03】path: %v\n", path)
 		panic(err)
 	}
-	fmt.Println(buf.String())
 
-	fmt.Println("======================================")
+	fp, err := GetOutputFile(path)
+	if err != nil {
+		fmt.Printf("【04】path: %v\n", path)
+		panic(err)
+	}
+	defer fp.Close()
+
+	w := bufio.NewWriter(fp)
+	w.WriteString(buf.String())
+	w.Flush()
+
 	return nil
 }
 
+// TODO フィルタリング機能としてパッケージ分け
 func IsTarget(path string, info os.FileInfo) bool {
 	if info.IsDir() {
 		return false
@@ -147,4 +151,30 @@ func GetPackageName(path string) string {
 		}
 	}
 	return path
+}
+
+// TODO とりあえず適当実装なので見直す
+func GetOutputFile(path string) (*os.File, error) {
+	absPath, err := filepath.Abs(path)
+	if err != nil {
+		return nil, err
+	}
+	absDir := filepath.Dir(absPath)
+	absFile := filepath.Base(absPath)
+	absFileNm := strings.Split(absFile, ".")[0]
+	absTestFile := fmt.Sprintf("%s_test.go", absFileNm)
+	absOutFile := filepath.Join(absDir, absTestFile)
+	if Exists(absOutFile) {
+		return nil, err
+	}
+	fl, err := os.Create(absOutFile)
+	if err != nil {
+		return nil, err
+	}
+	return fl, nil
+}
+
+func Exists(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
 }
