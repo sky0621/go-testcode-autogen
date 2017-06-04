@@ -1,4 +1,4 @@
-package {{.PkgName}}
+package "{{.PkgName}}"
 
 import (
 	"testing"

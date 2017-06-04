@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"flag"
 	"fmt"
@@ -21,7 +22,7 @@ func main() {
 
 	// TODO config読み込んでロジックに反映
 
-	// TODO go/astパッケージのWalkを使うようにする
+	// TODO go/astパッケージのWalkを使うようにする(ただし、パッケージ名が取れない問題とセットで考慮)
 	filepath.Walk(*target, Apply)
 }
 
@@ -41,7 +42,9 @@ func Apply(path string, info os.FileInfo, err error) error {
 	}
 
 	fmt.Println("======================================")
-	out := &TestCodeInfo{}
+	out := &TestCodeInfo{PkgName: GetPackageName(fset.Position(f.Package).Filename)}
+
+	//fmt.Printf("【%#v】\n", fset.Position(f.Package).String())
 
 	fncs := []*Function{}
 	for _, decl := range f.Decls {
@@ -52,8 +55,9 @@ func Apply(path string, info os.FileInfo, err error) error {
 			//	fmt.Printf("[GenDecl]: %#v\n", spec)
 			//}
 			switch declType.Tok {
+			// MEMO パッケージ名が取れない...
 			//case token.PACKAGE:
-			//fmt.Printf("PACKAGE: %#v\n", declType)
+			//	fmt.Printf("PACKAGE: %#v\n", declType)
 			//	case token.IMPORT:
 			//	case token.TYPE:
 			//	case token.CONST:
@@ -123,4 +127,24 @@ func IsFirstUpper(v string) bool {
 	}
 	r := rune(v[0])
 	return unicode.IsUpper(r)
+}
+
+// TODO ast経由での取得の仕方を模索
+func GetPackageName(path string) string {
+	fl, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer fl.Close()
+	sc := bufio.NewScanner(fl)
+	for i := 1; sc.Scan(); i++ {
+		if err := sc.Err(); err != nil {
+			break
+		}
+		// TODO 適当すぎなので、もう少し洗練されたやり方に直す
+		if strings.Contains(sc.Text(), "package ") {
+			return strings.Split(sc.Text(), "package ")[1]
+		}
+	}
+	return path
 }
