@@ -1,10 +1,10 @@
-package {{.Pkg}}
+package {{.PkgName}}
 
 import (
-	"testing"{{range .Imports}}
-	{{.}}{{end}}
+	"testing"
 )
-
-{{range .Functions}}func Test{{.FuncName}}(t *testing.T) {
+{{range .Functions}}
+func Test{{.FuncName}}(t *testing.T) {
     // FIXME write the necessary test code 
-}{{end}}
+}
+{{end}}
