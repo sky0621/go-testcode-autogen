@@ -43,6 +43,13 @@ func Apply(path string, info os.FileInfo, err error) error {
 		panic(err)
 	}
 
+	//ast.Inspect(f, func(n ast.Node) bool {
+	//	if ident, ok := n.(*ast.Ident); ok {
+	//		fmt.Println(ident.Name)
+	//	}
+	//	return true
+	//})
+
 	out := &TestCodeInfo{PkgName: GetPackageName(fset.Position(f.Package).Filename)}
 
 	fncs := []*Function{}
