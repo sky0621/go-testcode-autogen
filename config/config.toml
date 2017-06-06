@@ -1,3 +1,5 @@
 [filter]
 outdir = ["vendor"]
 outfile = [".*test.*"]
+indir = []
+infile = [".*\.go"]

@@ -32,7 +32,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 	}
 
 	ast.Inspect(f, func(n ast.Node) bool {
-
+		// FIXME Nodeの型に応じた処理をinspectパッケージ内に作成
 		return true
 	})
 
@@ -65,7 +65,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 
 	out.Functions = fncs
 
-	tmpl := template.Must(template.ParseFiles("./testcode.md"))
+	tmpl := template.Must(template.ParseFiles("./template/testcode.md"))
 	buf := &bytes.Buffer{}
 	err = tmpl.Execute(buf, out)
 	if err != nil {
