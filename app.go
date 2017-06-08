@@ -12,6 +12,9 @@ import (
 	"path/filepath"
 	"strings"
 	"unicode"
+
+	"github.com/sky0621/go-testcode-autogen/inspect"
+	"github.com/sky0621/go-testcode-autogen/testinfo"
 )
 
 func Apply(path string, info os.FileInfo, err error) error {
@@ -31,10 +34,22 @@ func Apply(path string, info os.FileInfo, err error) error {
 		panic(err)
 	}
 
-	ast.Inspect(f, func(n ast.Node) bool {
-		// FIXME Nodeの型に応じた処理をinspectパッケージ内に作成
+	testInfo := &testinfo.TestInfo{}
+	ast.Inspect(f, func(node ast.Node) bool {
+		inspector := inspect.GetInspector(node)
+		if inspector == nil {
+			return true
+		}
+		err := inspector.Inspect(node, testInfo)
+		if err != nil {
+			fmt.Println(err)
+			return false
+		}
 		return true
 	})
+	fmt.Println("=================================================")
+	fmt.Printf("%#v\n", testInfo)
+	fmt.Println("=================================================")
 
 	out := &TestCodeInfo{PkgName: GetPackageName(fset.Position(f.Package).Filename)}
 
@@ -65,7 +80,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 
 	out.Functions = fncs
 
-	tmpl := template.Must(template.ParseFiles("./template/testcode.md"))
+	tmpl := template.Must(template.ParseFiles("../template/testcode.md"))
 	buf := &bytes.Buffer{}
 	err = tmpl.Execute(buf, out)
 	if err != nil {
