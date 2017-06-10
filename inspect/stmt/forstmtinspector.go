@@ -8,18 +8,18 @@ import (
 	"github.com/sky0621/go-testcode-autogen/testinfo"
 )
 
-type FuncDeclInspector struct{}
+type ForStmtInspector struct{}
 
-func (i *FuncDeclInspector) IsTarget(node ast.Node) bool {
+func (i *ForStmtInspector) IsTarget(node ast.Node) bool {
 	switch node.(type) {
-	case *ast.FuncDecl:
+	case *ast.ForStmt:
 		return true
 	}
 	return false
 }
 
-func (i *FuncDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *ForStmtInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
 	// FIXME
-	fmt.Printf("FuncDeclInspector: %#v\n", node)
+	fmt.Printf("ForStmtInspector: %#v\n", node)
 	return nil
 }
