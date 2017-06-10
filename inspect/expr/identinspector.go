@@ -20,7 +20,15 @@ func (i *IdentInspector) IsTarget(node ast.Node) bool {
 
 func (i *IdentInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
 	idt := node.(*ast.Ident)
-	// FIXME
-	fmt.Printf("IdentInspector: %#v\n", idt)
+	fmt.Println("[[[ IdentInspector ]]]")
+	fmt.Printf("Name: %#v\n", idt.Name)
+	if idt.Obj != nil {
+		fmt.Printf("Obj.Name: %#v\n", idt.Obj.Name)
+		fmt.Printf("Obj.Decl: %#v\n", idt.Obj.Decl)
+		fmt.Printf("Obj.Type: %#v\n", idt.Obj.Type)
+		fmt.Printf("Obj.Data: %#v\n", idt.Obj.Data)
+		fmt.Printf("Obj.Kind: %#v\n", idt.Obj.Kind)
+
+	}
 	return nil
 }

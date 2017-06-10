@@ -18,6 +18,14 @@ func (i *GenDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
+func (i *GenDeclInspector) IsTargetDecl(node ast.Decl) bool {
+	switch node.(type) {
+	case *ast.GenDecl:
+		return true
+	}
+	return false
+}
+
 func (i *GenDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
 	gd := node.(*ast.GenDecl)
 	// FIXME

@@ -19,7 +19,6 @@ import (
 
 func Apply(path string, info os.FileInfo, err error) error {
 	if err != nil {
-		fmt.Println("【01】")
 		panic(err)
 	}
 
@@ -30,7 +29,6 @@ func Apply(path string, info os.FileInfo, err error) error {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, path, nil, parser.AllErrors)
 	if err != nil {
-		fmt.Println("【02】")
 		panic(err)
 	}
 
@@ -38,6 +36,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 	ast.Inspect(f, func(node ast.Node) bool {
 		inspector := inspect.GetInspector(node)
 		if inspector == nil {
+			// TODO WARNログ
 			return true
 		}
 		err := inspector.Inspect(node, testInfo)

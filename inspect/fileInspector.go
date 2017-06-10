@@ -19,7 +19,16 @@ func (i *FileInspector) IsTarget(node ast.Node) bool {
 
 func (i *FileInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
 	fl := node.(*ast.File)
-	// FIXME
-	fmt.Printf("FileInspector: %#v\n", fl)
+	fmt.Println("[[[ FileInspector ]]]")
+	fmt.Printf("Name: %#v\n", fl.Name)
+	if fl.Scope != nil {
+		fmt.Printf("Scope.Objects: %#v\n", fl.Scope.Objects)
+		fmt.Printf("Scope.Outer: %#v\n", fl.Scope.Outer)
+	}
+	//for _, d := range fl.Decls {
+	//
+	//	fmt.Printf("Obj.Name: %#v\n", d.)
+	//
+	//}
 	return nil
 }
