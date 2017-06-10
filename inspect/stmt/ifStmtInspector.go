@@ -19,7 +19,8 @@ func (i *IfStmtInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *IfStmtInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	is := node.(*ast.IfStmt)
 	// FIXME
-	fmt.Printf("IfStmtInspector: %#v\n", node)
+	fmt.Printf("IfStmtInspector: %#v\n", is)
 	return nil
 }

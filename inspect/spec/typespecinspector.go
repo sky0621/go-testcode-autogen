@@ -19,7 +19,8 @@ func (i *TypeSpecInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *TypeSpecInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	ts := node.(*ast.TypeSpec)
 	// FIXME
-	fmt.Printf("TypeSpecInspector: %#v\n", node)
+	fmt.Printf("TypeSpecInspector: %#v\n", ts)
 	return nil
 }

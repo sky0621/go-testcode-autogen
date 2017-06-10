@@ -1,5 +1,5 @@
 package testinfo
 
 type TestInfo struct {
-	// FIXME
+	PackageName string
 }

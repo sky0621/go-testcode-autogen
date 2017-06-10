@@ -19,7 +19,8 @@ func (i *IdentInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *IdentInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	idt := node.(*ast.Ident)
 	// FIXME
-	fmt.Printf("IdentInspector: %#v\n", node)
+	fmt.Printf("IdentInspector: %#v\n", idt)
 	return nil
 }

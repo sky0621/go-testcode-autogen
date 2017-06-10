@@ -19,7 +19,8 @@ func (i *BadDeclInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *BadDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	bd := node.(*ast.BadDecl)
 	// FIXME
-	fmt.Printf("BadDeclInspector: %#v\n", node)
+	fmt.Printf("BadDeclInspector: %#v\n", bd)
 	return nil
 }

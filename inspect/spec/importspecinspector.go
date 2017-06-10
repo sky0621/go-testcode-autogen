@@ -19,7 +19,8 @@ func (i *ImportSpecInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *ImportSpecInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	is := node.(*ast.ImportSpec)
 	// FIXME
-	fmt.Printf("ImportSpecInspector: %#v\n", node)
+	fmt.Printf("ImportSpecInspector: %#v\n", is)
 	return nil
 }

@@ -19,7 +19,8 @@ func (i *GenDeclInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *GenDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	gd := node.(*ast.GenDecl)
 	// FIXME
-	fmt.Printf("GenDeclInspector: %#v\n", node)
+	fmt.Printf("GenDeclInspector: %#v\n", gd)
 	return nil
 }

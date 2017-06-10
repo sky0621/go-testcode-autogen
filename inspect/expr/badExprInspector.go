@@ -19,7 +19,8 @@ func (i *BadExprInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *BadExprInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	be := node.(*ast.BadExpr)
 	// FIXME
-	fmt.Printf("BadExprInspector: %#v\n", node)
+	fmt.Printf("BadExprInspector: %#v\n", be)
 	return nil
 }

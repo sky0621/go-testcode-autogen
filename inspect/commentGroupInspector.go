@@ -19,7 +19,8 @@ func (i *CommentGroupInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *CommentGroupInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	cg := node.(*ast.CommentGroup)
 	// FIXME
-	fmt.Printf("CommentGroupInspector: %#v\n", node)
+	fmt.Printf("CommentGroupInspector: %#v\n", cg)
 	return nil
 }

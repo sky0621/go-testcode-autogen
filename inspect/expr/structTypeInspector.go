@@ -19,7 +19,8 @@ func (i *StructTypeInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *StructTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	st := node.(*ast.StructType)
 	// FIXME
-	fmt.Printf("StructTypeInspector: %#v\n", node)
+	fmt.Printf("StructTypeInspector: %#v\n", st)
 	return nil
 }

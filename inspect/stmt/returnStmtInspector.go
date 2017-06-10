@@ -19,7 +19,8 @@ func (i *ReturnStmtInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *ReturnStmtInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	rs := node.(*ast.ReturnStmt)
 	// FIXME
-	fmt.Printf("ReturnStmtInspector: %#v\n", node)
+	fmt.Printf("ReturnStmtInspector: %#v\n", rs)
 	return nil
 }

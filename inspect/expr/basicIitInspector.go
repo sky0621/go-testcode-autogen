@@ -19,7 +19,8 @@ func (i *BasicLitInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *BasicLitInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	bl := node.(*ast.BasicLit)
 	// FIXME
-	fmt.Printf("BasicLitInspector: %#v\n", node)
+	fmt.Printf("BasicLitInspector: %#v\n", bl)
 	return nil
 }

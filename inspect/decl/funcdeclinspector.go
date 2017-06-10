@@ -19,7 +19,8 @@ func (i *FuncDeclInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FuncDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	fd := node.(*ast.FuncDecl)
 	// FIXME
-	fmt.Printf("FuncDeclInspector: %#v\n", node)
+	fmt.Printf("FuncDeclInspector: %#v\n", fd)
 	return nil
 }

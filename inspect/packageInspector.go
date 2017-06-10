@@ -19,7 +19,8 @@ func (i *PackageInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *PackageInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	pkg := node.(*ast.Package)
 	// FIXME
-	fmt.Printf("PackageInspector: %#v\n", node)
+	fmt.Printf("PackageInspector: %#v\n", pkg)
 	return nil
 }

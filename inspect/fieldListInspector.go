@@ -19,7 +19,8 @@ func (i *FieldListInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FieldListInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	fl := node.(*ast.FieldList)
 	// FIXME
-	fmt.Printf("FieldListInspector: %#v\n", node)
+	fmt.Printf("FieldListInspector: %#v\n", fl)
 	return nil
 }

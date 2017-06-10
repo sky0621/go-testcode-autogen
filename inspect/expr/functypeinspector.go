@@ -19,7 +19,8 @@ func (i *FuncTypeInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FuncTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	ft := node.(*ast.FuncType)
 	// FIXME
-	fmt.Printf("FuncTypeInspector: %#v\n", node)
+	fmt.Printf("FuncTypeInspector: %#v\n", ft)
 	return nil
 }

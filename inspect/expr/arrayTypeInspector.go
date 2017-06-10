@@ -19,7 +19,8 @@ func (i *ArrayTypeInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *ArrayTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+	at := node.(*ast.ArrayType)
 	// FIXME
-	fmt.Printf("ArrayTypeInspector: %#v\n", node)
+	fmt.Printf("ArrayTypeInspector: %#v\n", at)
 	return nil
 }
