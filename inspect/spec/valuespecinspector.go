@@ -19,7 +19,10 @@ func (i *ValueSpecInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *ValueSpecInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	vs := node.(*ast.ValueSpec)
+	vs, ok := node.(*ast.ValueSpec)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("ValueSpecInspector: %#v\n", vs)
 	return nil

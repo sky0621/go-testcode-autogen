@@ -18,6 +18,9 @@ import (
 )
 
 func Apply(path string, info os.FileInfo, err error) error {
+	fmt.Println("##################################################################################")
+	fmt.Println(path)
+	fmt.Println("##################################################################################")
 	if err != nil {
 		panic(err)
 	}

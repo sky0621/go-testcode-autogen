@@ -10,9 +10,3 @@ type Inspector interface {
 	IsTarget(node ast.Node) bool
 	Inspect(node ast.Node, testinfo *testinfo.TestInfo) error
 }
-
-type DeclInspector interface {
-	IsTargetDecl(decl ast.Decl) bool
-	InspectDecl(decl ast.Decl, testinfo *testinfo.TestInfo) error
-	Inspector
-}

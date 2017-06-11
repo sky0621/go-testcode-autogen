@@ -19,7 +19,10 @@ func (i *IdentInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *IdentInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	idt := node.(*ast.Ident)
+	idt, ok := node.(*ast.Ident)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	fmt.Println("[[[ IdentInspector ]]]")
 	fmt.Printf("Name: %#v\n", idt.Name)
 	if idt.Obj != nil {

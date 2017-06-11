@@ -18,17 +18,13 @@ func (i *FileInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FileInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	fl := node.(*ast.File)
-	fmt.Println("[[[ FileInspector ]]]")
-	fmt.Printf("Name: %#v\n", fl.Name)
-	if fl.Scope != nil {
-		fmt.Printf("Scope.Objects: %#v\n", fl.Scope.Objects)
-		fmt.Printf("Scope.Outer: %#v\n", fl.Scope.Outer)
+	fl, ok := node.(*ast.File)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
 	}
-	//for _, d := range fl.Decls {
-	//
-	//	fmt.Printf("Obj.Name: %#v\n", d.)
-	//
-	//}
+	// MEMO ast.Package で取得できないため、ここで取得
+	if fl.Name != nil {
+		testinfo.PackageName = fl.Name.Name
+	}
 	return nil
 }

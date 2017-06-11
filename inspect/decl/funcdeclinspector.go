@@ -19,7 +19,10 @@ func (i *FuncDeclInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FuncDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	fd := node.(*ast.FuncDecl)
+	fd, ok := node.(*ast.FuncDecl)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("FuncDeclInspector: %#v\n", fd)
 	return nil

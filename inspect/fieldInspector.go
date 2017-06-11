@@ -19,7 +19,10 @@ func (i *FieldInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *FieldInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	fi := node.(*ast.Field)
+	fi, ok := node.(*ast.Field)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("FieldInspector: %#v\n", fi)
 	return nil

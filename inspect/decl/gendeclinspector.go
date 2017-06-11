@@ -18,16 +18,11 @@ func (i *GenDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *GenDeclInspector) IsTargetDecl(node ast.Decl) bool {
-	switch node.(type) {
-	case *ast.GenDecl:
-		return true
-	}
-	return false
-}
-
 func (i *GenDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	gd := node.(*ast.GenDecl)
+	gd, ok := node.(*ast.GenDecl)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("GenDeclInspector: %#v\n", gd)
 	return nil

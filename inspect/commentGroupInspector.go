@@ -19,7 +19,10 @@ func (i *CommentGroupInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *CommentGroupInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	cg := node.(*ast.CommentGroup)
+	cg, ok := node.(*ast.CommentGroup)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("CommentGroupInspector: %#v\n", cg)
 	return nil
