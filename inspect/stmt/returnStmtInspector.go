@@ -19,7 +19,10 @@ func (i *ReturnStmtInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *ReturnStmtInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	rs := node.(*ast.ReturnStmt)
+	rs, ok := node.(*ast.ReturnStmt)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("ReturnStmtInspector: %#v\n", rs)
 	return nil

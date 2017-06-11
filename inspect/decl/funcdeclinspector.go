@@ -24,6 +24,6 @@ func (i *FuncDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) 
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("FuncDeclInspector: %#v\n", fd)
+	fmt.Printf("FuncDeclInspector: Name[%#v], Type[%#v], Body[%#v], Recv[%#v]\n", fd.Name, fd.Type, fd.Body, fd.Recv)
 	return nil
 }

@@ -19,7 +19,10 @@ func (i *InterfaceTypeInspector) IsTarget(node ast.Node) bool {
 }
 
 func (i *InterfaceTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
-	it := node.(*ast.InterfaceType)
+	it, ok := node.(*ast.InterfaceType)
+	if !ok {
+		return fmt.Errorf("Not target Node: %#v", node)
+	}
 	// FIXME
 	fmt.Printf("InterfaceTypeInspector: %#v\n", it)
 	return nil
