@@ -5,14 +5,15 @@ import (
 	"path/filepath"
 
 	ag "github.com/sky0621/go-testcode-autogen"
+	"github.com/sky0621/go-testcode-autogen/config"
 )
 
-// TODO 機能実現スピード最優先での実装なので要リファクタ
 func main() {
 	target := flag.String("target", "../example/sampleproject", "Parse Target")
+	cfg := flag.String("config", "../config/config.toml", "Config File")
 	flag.Parse()
 
-	// TODO config読み込んでロジックに反映
+	config.ReadConfig(*cfg)
 
 	filepath.Walk(*target, ag.Apply)
 }

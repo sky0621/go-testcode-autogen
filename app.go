@@ -13,6 +13,8 @@ import (
 	"strings"
 	"unicode"
 
+	"github.com/sky0621/go-testcode-autogen/config"
+	"github.com/sky0621/go-testcode-autogen/filter"
 	"github.com/sky0621/go-testcode-autogen/inspect"
 	"github.com/sky0621/go-testcode-autogen/testinfo"
 )
@@ -20,12 +22,14 @@ import (
 func Apply(path string, info os.FileInfo, err error) error {
 	fmt.Println("##################################################################################")
 	fmt.Println(path)
+	fmt.Println(config.NewConfig().Filter)
 	fmt.Println("##################################################################################")
 	if err != nil {
 		panic(err)
 	}
 
-	if !IsTarget(path, info) {
+	fmngr := &filter.FilterManager{Cfg: config.NewFilterConfig()}
+	if !fmngr.IsTarget(path, info) {
 		return nil
 	}
 

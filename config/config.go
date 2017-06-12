@@ -17,12 +17,16 @@ func NewConfig() *Config {
 type FilterConfig struct {
 	OutDir  []string
 	OutFile []string
+	InDir   []string
+	InFile  []string
 }
 
 func NewFilterConfig() *FilterConfig {
 	return &FilterConfig{
 		OutDir:  viper.GetStringSlice("filter.outdir"),
 		OutFile: viper.GetStringSlice("filter.outfile"),
+		InDir:   viper.GetStringSlice("filter.indir"),
+		InFile:  viper.GetStringSlice("filter.infile"),
 	}
 }
 
