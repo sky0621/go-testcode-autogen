@@ -22,13 +22,12 @@ import (
 func Apply(path string, info os.FileInfo, err error) error {
 	fmt.Println("##################################################################################")
 	fmt.Println(path)
-	fmt.Println(config.NewConfig().Filter)
 	fmt.Println("##################################################################################")
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	fmngr := &filter.FilterManager{Cfg: config.NewFilterConfig()}
+	fmngr := &filter.FilterManager{Filter: config.NewConfig().Filter}
 	if !fmngr.IsTarget(path, info) {
 		return nil
 	}
@@ -36,7 +35,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, path, nil, parser.AllErrors)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	testInfo := &testinfo.TestInfo{}
@@ -91,7 +90,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 	err = tmpl.Execute(buf, out)
 	if err != nil {
 		fmt.Printf("【03】path: %v\n", path)
-		panic(err)
+		return err
 	}
 
 	fp, err := GetOutputFile(path)

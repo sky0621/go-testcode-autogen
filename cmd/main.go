@@ -4,6 +4,7 @@ import (
 	"flag"
 	"path/filepath"
 
+	"github.com/Sirupsen/logrus"
 	ag "github.com/sky0621/go-testcode-autogen"
 	"github.com/sky0621/go-testcode-autogen/config"
 )
@@ -15,5 +16,8 @@ func main() {
 
 	config.ReadConfig(*cfg)
 
-	filepath.Walk(*target, ag.Apply)
+	err := filepath.Walk(*target, ag.Apply)
+	if err != nil {
+		logrus.Error(err)
+	}
 }

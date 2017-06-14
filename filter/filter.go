@@ -13,12 +13,12 @@ import (
 )
 
 type FilterManager struct {
-	Cfg *config.FilterConfig
+	Filter *config.Filter
 }
 
 func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 	fmt.Println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ")
-	fmt.Printf("Cfg: %#v\n", m.Cfg)
+	fmt.Printf("Cfg: %#v\n", m.Filter)
 	fmt.Println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ")
 	if info.IsDir() {
 		return false
@@ -32,7 +32,7 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 	fmt.Printf("path: %v, absPath: %v\n", path, absPath)
 	fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
 
-	outDirs := m.Cfg.OutDir
+	outDirs := m.Filter.OutDir
 	fmt.Printf("outDirs: %v\n", outDirs)
 	for _, outDir := range outDirs {
 		outDirExp, err := regexp.Compile(outDir)
@@ -45,7 +45,7 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 		}
 	}
 
-	outFiles := m.Cfg.OutFile
+	outFiles := m.Filter.OutFile
 	for _, outFile := range outFiles {
 		outFileExp, err := regexp.Compile(outFile)
 		if err != nil {
@@ -57,7 +57,7 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 		}
 	}
 
-	inDirs := m.Cfg.InDir
+	inDirs := m.Filter.InDir
 	for _, inDir := range inDirs {
 		inDirExp, err := regexp.Compile(inDir)
 		if err != nil {
@@ -69,7 +69,7 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 		}
 	}
 
-	inFiles := m.Cfg.InFile
+	inFiles := m.Filter.InFile
 	for _, inFile := range inFiles {
 		inFileExp, err := regexp.Compile(inFile)
 		if err != nil {

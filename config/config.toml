@@ -2,4 +2,4 @@
 outdir = ["vendor"]
 outfile = [".*test.*"]
 indir = []
-infile = [".*\.go"]
+infile = [".*.go"]
