@@ -107,28 +107,6 @@ func Apply(path string, info os.FileInfo, err error) error {
 	return nil
 }
 
-// TODO フィルタリング機能としてパッケージ分け
-func IsTarget(path string, info os.FileInfo) bool {
-	if info.IsDir() {
-		return false
-	}
-	if filepath.Ext(path) != ".go" {
-		return false
-	}
-	if strings.Contains(path, "_test") {
-		return false
-	}
-	absPath, err := filepath.Abs(path)
-	if err != nil {
-		return false
-	}
-	if strings.Contains(absPath, "vendor") {
-		return false
-	}
-
-	return true
-}
-
 type TestCodeInfo struct {
 	PkgName   string
 	Functions []*Function
