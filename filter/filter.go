@@ -12,14 +12,13 @@ import (
 	"github.com/sky0621/go-testcode-autogen/config"
 )
 
+// FilterManager ...
 type FilterManager struct {
-	Filter *config.Filter
+	Filter *config.FilterConfig
 }
 
+// IsTarget ...
 func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
-	fmt.Println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ")
-	fmt.Printf("Cfg: %#v\n", m.Filter)
-	fmt.Println("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ")
 	if info.IsDir() {
 		return false
 	}
@@ -28,19 +27,14 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 	if err != nil {
 		return false
 	}
-	fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
-	fmt.Printf("path: %v, absPath: %v\n", path, absPath)
-	fmt.Println("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
 
 	outDirs := m.Filter.OutDir
-	fmt.Printf("outDirs: %v\n", outDirs)
 	for _, outDir := range outDirs {
 		outDirExp, err := regexp.Compile(outDir)
 		if err != nil {
 			return false
 		}
 		if outDirExp.MatchString(absPath) {
-			fmt.Printf("[OUT_DIR]absPath: %v, outDir: %v\n", absPath, outDir)
 			return false
 		}
 	}
@@ -52,7 +46,6 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 			return false
 		}
 		if outFileExp.MatchString(path) {
-			fmt.Printf("[OUT_FILE]path: %v, outFile: %v\n", path, outFile)
 			return false
 		}
 	}

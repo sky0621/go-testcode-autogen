@@ -4,26 +4,32 @@ import "github.com/spf13/viper"
 
 // Config ...
 type Config struct {
-	Filter *Filter
+	Filter *FilterConfig
 }
 
 // NewConfig ...
 func NewConfig() *Config {
-	var f Filter
-	err := viper.UnmarshalKey("filter", &f)
-	if err != nil {
-		panic(err)
-	}
 	return &Config{
-		Filter: &f,
+		Filter: NewFilterConfig(),
 	}
 }
 
-type Filter struct {
+// FilterConfig ...
+type FilterConfig struct {
 	OutDir  []string
 	OutFile []string
 	InDir   []string
 	InFile  []string
+}
+
+// NewFilterConfig ...
+func NewFilterConfig() *FilterConfig {
+	return &FilterConfig{
+		OutDir:  viper.GetStringSlice("filter.outdir"),
+		OutFile: viper.GetStringSlice("filter.outfile"),
+		InDir:   viper.GetStringSlice("filter.indir"),
+		InFile:  viper.GetStringSlice("filter.infile"),
+	}
 }
 
 // ReadConfig ...

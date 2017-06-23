@@ -1,0 +1,5 @@
+package sampleproject
+
+import (
+	"testing"
+)

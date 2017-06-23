@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	target := flag.String("target", "../example/sampleproject", "Parse Target")
+	target := flag.String("target", "../_example/sampleproject", "Parse Target")
 	cfg := flag.String("config", "../config/config.toml", "Config File")
 	flag.Parse()
 
