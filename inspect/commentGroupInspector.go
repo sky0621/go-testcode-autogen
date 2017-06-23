@@ -18,7 +18,7 @@ func (i *CommentGroupInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *CommentGroupInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *CommentGroupInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	cg, ok := node.(*ast.CommentGroup)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

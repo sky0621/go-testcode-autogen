@@ -18,7 +18,7 @@ func (i *BadExprInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BadExprInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *BadExprInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	be, ok := node.(*ast.BadExpr)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

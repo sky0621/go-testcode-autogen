@@ -18,7 +18,7 @@ func (i *IdentInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *IdentInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *IdentInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	idt, ok := node.(*ast.Ident)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

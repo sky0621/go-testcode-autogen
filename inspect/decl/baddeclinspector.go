@@ -18,7 +18,7 @@ func (i *BadDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BadDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *BadDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	bd, ok := node.(*ast.BadDecl)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

@@ -4,15 +4,20 @@ import (
 	"flag"
 	"path/filepath"
 
+	"github.com/Sirupsen/logrus"
 	ag "github.com/sky0621/go-testcode-autogen"
+	"github.com/sky0621/go-testcode-autogen/config"
 )
 
-// TODO 機能実現スピード最優先での実装なので要リファクタ
 func main() {
-	target := flag.String("target", "../example/sampleproject", "Parse Target")
+	target := flag.String("target", "../_example/sampleproject", "Parse Target")
+	cfg := flag.String("config", "../config/config.toml", "Config File")
 	flag.Parse()
 
-	// TODO config読み込んでロジックに反映
+	config.ReadConfig(*cfg)
 
-	filepath.Walk(*target, ag.Apply)
+	err := filepath.Walk(*target, ag.Apply)
+	if err != nil {
+		logrus.Error(err)
+	}
 }

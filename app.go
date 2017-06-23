@@ -11,28 +11,30 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"unicode"
 
+	"github.com/sky0621/go-testcode-autogen/config"
+	"github.com/sky0621/go-testcode-autogen/filter"
 	"github.com/sky0621/go-testcode-autogen/inspect"
 	"github.com/sky0621/go-testcode-autogen/testinfo"
 )
 
 func Apply(path string, info os.FileInfo, err error) error {
-	fmt.Println("##################################################################################")
-	fmt.Println(path)
-	fmt.Println("##################################################################################")
 	if err != nil {
-		panic(err)
+		return err
 	}
 
-	if !IsTarget(path, info) {
+	fmngr := &filter.FilterManager{Filter: config.NewConfig().Filter}
+	if !fmngr.IsTarget(path, info) {
 		return nil
 	}
+	fmt.Println("\n######################################################################################################################################\n")
+	fmt.Println(path)
+	fmt.Println("\n######################################################################################################################################\n")
 
 	fset := token.NewFileSet()
 	f, err := parser.ParseFile(fset, path, nil, parser.AllErrors)
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	testInfo := &testinfo.TestInfo{}
@@ -42,6 +44,8 @@ func Apply(path string, info os.FileInfo, err error) error {
 			// TODO WARNログ
 			return true
 		}
+		// TODO astだけでなくtypesも駆使すれば解析の幅も広がるはず
+		// TODO importする3rdパーティモジュールに応じたプラグイン処理を入れる（aws-sdk-goがあったら特定のテストコードロジックを自動生成するなど）
 		err := inspector.Inspect(node, testInfo)
 		if err != nil {
 			fmt.Println(err)
@@ -49,118 +53,32 @@ func Apply(path string, info os.FileInfo, err error) error {
 		}
 		return true
 	})
-	fmt.Println("=================================================")
-	fmt.Printf("%#v\n", testInfo)
-	fmt.Println("=================================================")
 
-	out := &TestCodeInfo{PkgName: GetPackageName(fset.Position(f.Package).Filename)}
-
-	fncs := []*Function{}
-	// TODO astだけでなくtypesも駆使すれば解析の幅も広がるはず
-	// TODO importする3rdパーティモジュールに応じたプラグイン処理を入れる（aws-sdk-goがあったら特定のテストコードロジックを自動生成するなど）
-	for _, decl := range f.Decls {
-		//ast.Print(fset, decl)
-		switch declType := decl.(type) {
-		case *ast.GenDecl:
-			switch declType.Tok {
-			// MEMO パッケージ名が取れない...
-			//case token.PACKAGE:
-			//	fmt.Printf("PACKAGE: %#v\n", declType)
-			default:
-			}
-		case *ast.FuncDecl:
-			if IsFirstUpper(declType.Name.String()) {
-				fncs = append(fncs, &Function{FuncName: declType.Name.String()})
-			}
-		default:
-		}
-	}
-
-	if len(fncs) < 1 {
+	if len(testInfo.Functions) < 1 {
 		return nil
 	}
-
-	out.Functions = fncs
-
 	tmpl := template.Must(template.ParseFiles("../template/testcode.md"))
 	buf := &bytes.Buffer{}
-	err = tmpl.Execute(buf, out)
+	err = tmpl.Execute(buf, testInfo)
 	if err != nil {
-		fmt.Printf("【03】path: %v\n", path)
-		panic(err)
+		return err
 	}
 
 	fp, err := GetOutputFile(path)
 	if err != nil {
-		fmt.Printf("【04】path: %v\n", path)
 		panic(err)
 	}
 	defer fp.Close()
+
+	fmt.Println("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+	fmt.Printf("[testInfo] %#v\n", testInfo)
+	fmt.Println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n")
 
 	w := bufio.NewWriter(fp)
 	w.WriteString(buf.String())
 	w.Flush()
 
 	return nil
-}
-
-// TODO フィルタリング機能としてパッケージ分け
-func IsTarget(path string, info os.FileInfo) bool {
-	if info.IsDir() {
-		return false
-	}
-	if filepath.Ext(path) != ".go" {
-		return false
-	}
-	if strings.Contains(path, "_test") {
-		return false
-	}
-	absPath, err := filepath.Abs(path)
-	if err != nil {
-		return false
-	}
-	if strings.Contains(absPath, "vendor") {
-		return false
-	}
-
-	return true
-}
-
-type TestCodeInfo struct {
-	PkgName   string
-	Functions []*Function
-}
-
-type Function struct {
-	FuncName string
-}
-
-func IsFirstUpper(v string) bool {
-	if v == "" {
-		return false
-	}
-	r := rune(v[0])
-	return unicode.IsUpper(r)
-}
-
-// TODO ast経由での取得の仕方を模索
-func GetPackageName(path string) string {
-	fl, err := os.Open(path)
-	if err != nil {
-		panic(err)
-	}
-	defer fl.Close()
-	sc := bufio.NewScanner(fl)
-	for i := 1; sc.Scan(); i++ {
-		if err := sc.Err(); err != nil {
-			break
-		}
-		// TODO 適当すぎなので、もう少し洗練されたやり方に直す
-		if strings.Contains(sc.Text(), "package ") {
-			return strings.Split(sc.Text(), "package ")[1]
-		}
-	}
-	return path
 }
 
 // TODO とりあえず適当実装なので見直す

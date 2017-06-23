@@ -18,7 +18,7 @@ func (i *PackageInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *PackageInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *PackageInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	pkg, ok := node.(*ast.Package)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

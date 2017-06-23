@@ -18,7 +18,7 @@ func (i *TypeSpecInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *TypeSpecInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *TypeSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	ts, ok := node.(*ast.TypeSpec)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

@@ -5,6 +5,8 @@ import (
 
 	"fmt"
 
+	"strings"
+
 	"github.com/sky0621/go-testcode-autogen/testinfo"
 )
 
@@ -18,12 +20,14 @@ func (i *ImportSpecInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ImportSpecInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *ImportSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	is, ok := node.(*ast.ImportSpec)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
-	// FIXME
-	fmt.Printf("ImportSpecInspector: %#v\n", is)
+	if is.Path == nil {
+		return nil
+	}
+	info.ImportNames = append(info.ImportNames, strings.Trim(is.Path.Value, `""`))
 	return nil
 }
