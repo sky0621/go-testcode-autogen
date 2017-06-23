@@ -18,11 +18,15 @@ func (i *FuncDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *FuncDeclInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *FuncDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	fd, ok := node.(*ast.FuncDecl)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
+	if fd.Name == nil {
+		return nil
+	}
+	info.Functions = append(info.Functions, &testinfo.Function{FunctionName: fd.Name.Name})
 	// FIXME
 	fmt.Printf("FuncDeclInspector: Name[%#v], Type[%#v], Body[%#v], Recv[%#v]\n", fd.Name, fd.Type, fd.Body, fd.Recv)
 	return nil

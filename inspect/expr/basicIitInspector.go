@@ -18,7 +18,7 @@ func (i *BasicLitInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BasicLitInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *BasicLitInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	bl, ok := node.(*ast.BasicLit)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

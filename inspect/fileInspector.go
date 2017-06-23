@@ -17,14 +17,14 @@ func (i *FileInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *FileInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *FileInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	fl, ok := node.(*ast.File)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// MEMO ast.Package で取得できないため、ここで取得
 	if fl.Name != nil {
-		testinfo.PackageName = fl.Name.Name
+		info.PackageName = fl.Name.Name
 	}
 	return nil
 }

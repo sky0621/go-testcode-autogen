@@ -67,6 +67,10 @@ func Apply(path string, info os.FileInfo, err error) error {
 	}
 	defer fp.Close()
 
+	fmt.Println("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+	fmt.Printf("[testInfo] %#v\n", testInfo)
+	fmt.Println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n")
+
 	w := bufio.NewWriter(fp)
 	w.WriteString(buf.String())
 	w.Flush()

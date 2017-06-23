@@ -18,7 +18,7 @@ func (i *ArrayTypeInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ArrayTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *ArrayTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	at, ok := node.(*ast.ArrayType)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

@@ -18,7 +18,7 @@ func (i *ForStmtInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ForStmtInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *ForStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	fs, ok := node.(*ast.ForStmt)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

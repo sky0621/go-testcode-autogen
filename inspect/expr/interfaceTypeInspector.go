@@ -18,7 +18,7 @@ func (i *InterfaceTypeInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *InterfaceTypeInspector) Inspect(node ast.Node, testinfo *testinfo.TestInfo) error {
+func (i *InterfaceTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	it, ok := node.(*ast.InterfaceType)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
