@@ -54,6 +54,9 @@ func Apply(path string, info os.FileInfo, err error) error {
 		return true
 	})
 
+	if len(testInfo.Functions) < 1 {
+		return nil
+	}
 	tmpl := template.Must(template.ParseFiles("../template/testcode.md"))
 	buf := &bytes.Buffer{}
 	err = tmpl.Execute(buf, testInfo)

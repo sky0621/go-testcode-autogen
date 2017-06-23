@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/util"
 )
 
 type FuncDeclInspector struct{}
@@ -24,6 +25,9 @@ func (i *FuncDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) erro
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	if fd.Name == nil {
+		return nil
+	}
+	if !util.IsFirstUpper(fd.Name.Name) {
 		return nil
 	}
 	info.Functions = append(info.Functions, &testinfo.Function{FunctionName: fd.Name.Name})
