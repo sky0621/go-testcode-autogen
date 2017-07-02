@@ -24,6 +24,7 @@ func (i *FieldInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("FieldInspector: %#v\n", fi)
+	fmt.Println("===== FieldInspector ===================================================================================")
+	fmt.Printf("Field: %#v\n", fi)
 	return nil
 }

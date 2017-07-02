@@ -24,6 +24,7 @@ func (i *BadDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("BadDeclInspector: %#v\n", bd)
+	fmt.Println("===== BadDeclInspector ===================================================================================")
+	fmt.Printf("BadDecl: %#v\n", bd)
 	return nil
 }

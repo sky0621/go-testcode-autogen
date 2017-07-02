@@ -24,6 +24,7 @@ func (i *FuncTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) erro
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("FuncTypeInspector: %#v\n", ft)
+	fmt.Println("===== FuncTypeInspector ===================================================================================")
+	fmt.Printf("FuncType: %#v\n", ft)
 	return nil
 }

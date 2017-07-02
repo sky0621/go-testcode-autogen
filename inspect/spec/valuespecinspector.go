@@ -24,6 +24,7 @@ func (i *ValueSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) err
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("ValueSpecInspector: %#v\n", vs)
+	fmt.Println("===== ValueSpecInspector ===================================================================================")
+	fmt.Printf("ValueSpec: %#v\n", vs)
 	return nil
 }

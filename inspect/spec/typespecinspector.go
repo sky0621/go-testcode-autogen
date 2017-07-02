@@ -24,6 +24,7 @@ func (i *TypeSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) erro
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("TypeSpecInspector: %#v\n", ts)
+	fmt.Println("===== TypeSpecInspector ===================================================================================")
+	fmt.Printf("TypeSpec: %#v\n", ts)
 	return nil
 }

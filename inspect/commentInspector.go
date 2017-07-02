@@ -24,6 +24,7 @@ func (i *CommentInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("CommentInspector: %#v\n", cmt)
+	fmt.Println("===== CommentInspector ===================================================================================")
+	fmt.Printf("Comment: %#v\n", cmt)
 	return nil
 }

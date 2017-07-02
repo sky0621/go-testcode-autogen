@@ -24,6 +24,7 @@ func (i *CommentGroupInspector) Inspect(node ast.Node, info *testinfo.TestInfo) 
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("CommentGroupInspector: %#v\n", cg)
+	fmt.Println("===== CommentGroupInspector ===================================================================================")
+	fmt.Printf("CommentGroup: %#v\n", cg)
 	return nil
 }

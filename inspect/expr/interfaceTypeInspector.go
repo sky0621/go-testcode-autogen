@@ -24,6 +24,7 @@ func (i *InterfaceTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo)
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("InterfaceTypeInspector: %#v\n", it)
+	fmt.Println("===== InterfaceTypeInspector ===================================================================================")
+	fmt.Printf("InterfaceType: %#v\n", it)
 	return nil
 }

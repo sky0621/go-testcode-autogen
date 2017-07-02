@@ -24,6 +24,7 @@ func (i *ArrayTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) err
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("ArrayTypeInspector: %#v\n", at)
+	fmt.Println("===== ArrayTypeInspector ===================================================================================")
+	fmt.Printf("ArrayType: %#v\n", at)
 	return nil
 }

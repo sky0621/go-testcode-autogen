@@ -24,6 +24,7 @@ func (i *FieldListInspector) Inspect(node ast.Node, info *testinfo.TestInfo) err
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("FieldListInspector: %#v\n", fl)
+	fmt.Println("===== FieldListInspector ===================================================================================")
+	fmt.Printf("FieldList: %#v\n", fl)
 	return nil
 }
