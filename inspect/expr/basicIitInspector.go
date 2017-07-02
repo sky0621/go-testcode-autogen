@@ -24,6 +24,7 @@ func (i *BasicLitInspector) Inspect(node ast.Node, info *testinfo.TestInfo) erro
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("BasicLitInspector: %#v\n", bl)
+	fmt.Println("===== BasicLitInspector ===================================================================================")
+	fmt.Printf("BasicLit: %#v\n", bl)
 	return nil
 }

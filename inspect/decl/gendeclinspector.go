@@ -24,6 +24,7 @@ func (i *GenDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("GenDeclInspector: %#v\n", gd)
+	fmt.Println("===== GenDeclInspector ===================================================================================")
+	fmt.Printf("GenDecl: %#v\n", gd)
 	return nil
 }

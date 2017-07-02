@@ -24,6 +24,7 @@ func (i *StructTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) er
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("StructTypeInspector: %#v\n", st)
+	fmt.Println("===== StructTypeInspector ===================================================================================")
+	fmt.Printf("StructType: %#v\n", st)
 	return nil
 }

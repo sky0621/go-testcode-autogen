@@ -24,6 +24,7 @@ func (i *ReturnStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) er
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("ReturnStmtInspector: %#v\n", rs)
+	fmt.Println("===== ReturnStmtInspector ===================================================================================")
+	fmt.Printf("ReturnStmt: %#v\n", rs)
 	return nil
 }

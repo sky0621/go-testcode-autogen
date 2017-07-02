@@ -23,7 +23,7 @@ func (i *IdentInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
-	fmt.Println("[[[ IdentInspector ]]]")
+	fmt.Println("===== IdentInspector ===================================================================================")
 	fmt.Printf("Name: %#v\n", idt.Name)
 	if idt.Obj != nil {
 		fmt.Printf("Obj.Name: %#v\n", idt.Obj.Name)

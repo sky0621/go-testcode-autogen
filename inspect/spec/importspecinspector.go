@@ -28,6 +28,8 @@ func (i *ImportSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) er
 	if is.Path == nil {
 		return nil
 	}
+	fmt.Println("===== ImportSpecInspector ===================================================================================")
+	fmt.Printf("ImportSpec: %#v\n", is)
 	info.ImportNames = append(info.ImportNames, strings.Trim(is.Path.Value, `""`))
 	return nil
 }

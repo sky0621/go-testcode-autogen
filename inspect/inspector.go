@@ -1,12 +1,8 @@
 package inspect
 
-import (
-	"go/ast"
-
-	"github.com/sky0621/go-testcode-autogen/testinfo"
-)
+import "go/ast"
 
 type Inspector interface {
 	IsTarget(node ast.Node) bool
-	Inspect(node ast.Node, info *testinfo.TestInfo) error
+	Inspect(node ast.Node, info *ResultAggregater) error
 }

@@ -24,6 +24,7 @@ func (i *ForStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error
 		return fmt.Errorf("Not target Node: %#v", node)
 	}
 	// FIXME
-	fmt.Printf("ForStmtInspector: %#v\n", fs)
+	fmt.Println("===== ForStmtInspector ===================================================================================")
+	fmt.Printf("ForStmt: %#v\n", fs)
 	return nil
 }
