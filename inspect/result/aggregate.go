@@ -1,6 +1,6 @@
-package inspect
+package result
 
-type ResultAggregater struct {
+type Aggregater struct {
 	PackageName string
 	ImportNames []string
 	Functions   []*Function
