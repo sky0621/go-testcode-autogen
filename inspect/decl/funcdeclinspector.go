@@ -31,10 +31,24 @@ func (i *FuncDeclInspector) Inspect(node ast.Node, aggregater *result.Aggregater
 		return nil
 	}
 	fmt.Println("===== FuncDeclInspector ===================================================================================")
+	if fd.Type != nil {
+		for _, tr := range fd.Type.Results.List {
+			fmt.Printf("Type.Results[%#v]\n", tr)
+		}
+		for _, tp := range fd.Type.Params.List {
+			fmt.Printf("Type.Params[%#v]\n", tp)
+		}
+	}
+	if fd.Recv != nil {
+		for _, rl := range fd.Recv.List {
+			fmt.Printf("Recv.List[%#v]\n", rl)
+		}
+	}
+
 	aggregater.Functions = append(aggregater.Functions, &result.Function{
 		FunctionName: fd.Name.Name},
 	)
 	// FIXME
-	fmt.Printf("FuncDecl: \n>Name[%#v], \n>Type[%#v], \n>Body[%#v], \n>Recv[%#v]\n", fd.Name, fd.Type, fd.Body, fd.Recv)
+	//fmt.Printf("FuncDecl: \n>Name[%#v], \n>Type[%#v], \n>Body[%#v], \n>Recv[%#v]\n", fd.Name, fd.Type, fd.Body, fd.Recv)
 	return nil
 }
