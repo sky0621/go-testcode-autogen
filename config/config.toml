@@ -1,3 +1,5 @@
+template = "../template/testcode.md"
+
 [filter]
 outdir = ["vendor"]
 outfile = [".*test.*"]

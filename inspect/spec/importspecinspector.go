@@ -7,7 +7,7 @@ import (
 
 	"strings"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type ImportSpecInspector struct{}
@@ -20,7 +20,7 @@ func (i *ImportSpecInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ImportSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *ImportSpecInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	is, ok := node.(*ast.ImportSpec)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
@@ -30,6 +30,6 @@ func (i *ImportSpecInspector) Inspect(node ast.Node, info *testinfo.TestInfo) er
 	}
 	fmt.Println("===== ImportSpecInspector ===================================================================================")
 	fmt.Printf("ImportSpec: %#v\n", is)
-	info.ImportNames = append(info.ImportNames, strings.Trim(is.Path.Value, `""`))
+	aggregater.ImportNames = append(aggregater.ImportNames, strings.Trim(is.Path.Value, `""`))
 	return nil
 }

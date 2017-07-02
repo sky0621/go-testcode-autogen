@@ -15,20 +15,24 @@ import (
 	"github.com/sky0621/go-testcode-autogen/config"
 	"github.com/sky0621/go-testcode-autogen/filter"
 	"github.com/sky0621/go-testcode-autogen/inspect"
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
+
+var Cfg *config.Config
 
 func Apply(path string, info os.FileInfo, err error) error {
 	if err != nil {
 		return err
 	}
 
-	fmngr := &filter.FilterManager{Filter: config.NewConfig().Filter}
+	fmngr := &filter.FilterManager{Filter: Cfg.Filter}
 	if !fmngr.IsTarget(path, info) {
 		return nil
 	}
 	fmt.Println("\n######################################################################################################################################\n")
+	fmt.Println("\n######################################################################################################################################\n")
 	fmt.Println(path)
+	fmt.Println("\n######################################################################################################################################\n")
 	fmt.Println("\n######################################################################################################################################\n")
 
 	fset := token.NewFileSet()
@@ -37,16 +41,15 @@ func Apply(path string, info os.FileInfo, err error) error {
 		return err
 	}
 
-	testInfo := &testinfo.TestInfo{}
+	aggregater := &result.Aggregater{}
 	ast.Inspect(f, func(node ast.Node) bool {
 		inspector := inspect.GetInspector(node)
 		if inspector == nil {
 			// TODO WARNログ
 			return true
 		}
-		// TODO astだけでなくtypesも駆使すれば解析の幅も広がるはず
 		// TODO importする3rdパーティモジュールに応じたプラグイン処理を入れる（aws-sdk-goがあったら特定のテストコードロジックを自動生成するなど）
-		err := inspector.Inspect(node, testInfo)
+		err := inspector.Inspect(node, aggregater)
 		if err != nil {
 			fmt.Println(err)
 			return false
@@ -54,12 +57,12 @@ func Apply(path string, info os.FileInfo, err error) error {
 		return true
 	})
 
-	if len(testInfo.Functions) < 1 {
+	if len(aggregater.Functions) < 1 {
 		return nil
 	}
-	tmpl := template.Must(template.ParseFiles("../template/testcode.md"))
+	tmpl := template.Must(template.ParseFiles(Cfg.Template))
 	buf := &bytes.Buffer{}
-	err = tmpl.Execute(buf, testInfo)
+	err = tmpl.Execute(buf, aggregater.Convert2TestClassInfo())
 	if err != nil {
 		return err
 	}
@@ -71,7 +74,7 @@ func Apply(path string, info os.FileInfo, err error) error {
 	defer fp.Close()
 
 	fmt.Println("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
-	fmt.Printf("[testInfo] %#v\n", testInfo)
+	fmt.Printf("[testInfo] %#v\n", aggregater.Convert2TestClassInfo())
 	fmt.Println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n")
 
 	w := bufio.NewWriter(fp)

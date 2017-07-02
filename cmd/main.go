@@ -15,6 +15,7 @@ func main() {
 	flag.Parse()
 
 	config.ReadConfig(*cfg)
+	ag.Cfg = config.NewConfig()
 
 	err := filepath.Walk(*target, ag.Apply)
 	if err != nil {

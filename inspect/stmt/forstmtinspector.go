@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type ForStmtInspector struct{}
@@ -18,7 +18,7 @@ func (i *ForStmtInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ForStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *ForStmtInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	fs, ok := node.(*ast.ForStmt)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

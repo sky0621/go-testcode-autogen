@@ -4,13 +4,15 @@ import "github.com/spf13/viper"
 
 // Config ...
 type Config struct {
-	Filter *FilterConfig
+	Template string
+	Filter   *FilterConfig
 }
 
 // NewConfig ...
 func NewConfig() *Config {
 	return &Config{
-		Filter: NewFilterConfig(),
+		Template: viper.GetString("template"),
+		Filter:   NewFilterConfig(),
 	}
 }
 

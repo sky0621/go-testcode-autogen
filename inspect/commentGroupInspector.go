@@ -3,9 +3,9 @@ package inspect
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type CommentGroupInspector struct{}
@@ -18,7 +18,7 @@ func (i *CommentGroupInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *CommentGroupInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *CommentGroupInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	cg, ok := node.(*ast.CommentGroup)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

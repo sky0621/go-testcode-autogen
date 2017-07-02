@@ -3,9 +3,9 @@ package decl
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type BadDeclInspector struct{}
@@ -18,7 +18,7 @@ func (i *BadDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BadDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *BadDeclInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	bd, ok := node.(*ast.BadDecl)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

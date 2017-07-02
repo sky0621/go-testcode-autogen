@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type BadExprInspector struct{}
@@ -18,7 +18,7 @@ func (i *BadExprInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BadExprInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *BadExprInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	be, ok := node.(*ast.BadExpr)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

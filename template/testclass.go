@@ -1,6 +1,6 @@
-package testinfo
+package template
 
-type TestInfo struct {
+type TestClass struct {
 	PackageName string
 	ImportNames []string
 	Functions   []*Function

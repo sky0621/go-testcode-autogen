@@ -3,9 +3,9 @@ package inspect
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type FieldInspector struct{}
@@ -18,7 +18,7 @@ func (i *FieldInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *FieldInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *FieldInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	fi, ok := node.(*ast.Field)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

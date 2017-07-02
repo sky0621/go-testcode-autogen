@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type BasicLitInspector struct{}
@@ -18,7 +18,7 @@ func (i *BasicLitInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *BasicLitInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *BasicLitInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	bl, ok := node.(*ast.BasicLit)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

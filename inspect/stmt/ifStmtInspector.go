@@ -3,9 +3,9 @@ package stmt
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type IfStmtInspector struct{}
@@ -18,7 +18,7 @@ func (i *IfStmtInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *IfStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *IfStmtInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	is, ok := node.(*ast.IfStmt)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

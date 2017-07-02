@@ -3,9 +3,9 @@ package expr
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type ArrayTypeInspector struct{}
@@ -18,7 +18,7 @@ func (i *ArrayTypeInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ArrayTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *ArrayTypeInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	at, ok := node.(*ast.ArrayType)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

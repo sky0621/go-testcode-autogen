@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type IdentInspector struct{}
@@ -18,7 +18,7 @@ func (i *IdentInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *IdentInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *IdentInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	idt, ok := node.(*ast.Ident)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

@@ -3,9 +3,9 @@ package expr
 import (
 	"go/ast"
 
-	"fmt"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"fmt"
 )
 
 type InterfaceTypeInspector struct{}
@@ -18,7 +18,7 @@ func (i *InterfaceTypeInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *InterfaceTypeInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *InterfaceTypeInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	it, ok := node.(*ast.InterfaceType)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

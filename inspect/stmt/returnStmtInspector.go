@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 )
 
 type ReturnStmtInspector struct{}
@@ -18,7 +18,7 @@ func (i *ReturnStmtInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *ReturnStmtInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *ReturnStmtInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	rs, ok := node.(*ast.ReturnStmt)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)

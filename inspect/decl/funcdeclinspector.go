@@ -5,7 +5,7 @@ import (
 
 	"fmt"
 
-	"github.com/sky0621/go-testcode-autogen/testinfo"
+	"github.com/sky0621/go-testcode-autogen/inspect/result"
 	"github.com/sky0621/go-testcode-autogen/util"
 )
 
@@ -19,7 +19,7 @@ func (i *FuncDeclInspector) IsTarget(node ast.Node) bool {
 	return false
 }
 
-func (i *FuncDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) error {
+func (i *FuncDeclInspector) Inspect(node ast.Node, aggregater *result.Aggregater) error {
 	fd, ok := node.(*ast.FuncDecl)
 	if !ok {
 		return fmt.Errorf("Not target Node: %#v", node)
@@ -31,7 +31,7 @@ func (i *FuncDeclInspector) Inspect(node ast.Node, info *testinfo.TestInfo) erro
 		return nil
 	}
 	fmt.Println("===== FuncDeclInspector ===================================================================================")
-	info.Functions = append(info.Functions, &testinfo.Function{
+	aggregater.Functions = append(aggregater.Functions, &result.Function{
 		FunctionName: fd.Name.Name},
 	)
 	// FIXME
