@@ -10,6 +10,7 @@ type Aggregater struct {
 
 type Function struct {
 	FunctionName    string
+	Receiver        map[interface{}]string // key:type, value:name
 	FunctionReturns map[interface{}]string // key:type, value:name
 	FunctionParams  map[interface{}]string // key:type, value:name
 }

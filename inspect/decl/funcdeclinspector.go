@@ -30,18 +30,14 @@ func (i *FuncDeclInspector) Inspect(node ast.Node, aggregater *result.Aggregater
 	if !util.IsFirstUpper(fd.Name.Name) {
 		return nil
 	}
+
 	fmt.Println("===== FuncDeclInspector ===================================================================================")
-	if fd.Type != nil {
-		for _, tr := range fd.Type.Results.List {
-			fmt.Printf("Type.Results[%#v]\n", tr)
-		}
-		for _, tp := range fd.Type.Params.List {
-			fmt.Printf("Type.Params[%#v]\n", tp)
-		}
-	}
+	// レシーバー解析
 	if fd.Recv != nil {
 		for _, rl := range fd.Recv.List {
-			fmt.Printf("Recv.List[%#v]\n", rl)
+			for _, n := range rl.Names {
+				fmt.Printf("Recv.Name[%#v], Obj[%#v]\n", n.Name, n.Obj.Data)
+			}
 		}
 	}
 
