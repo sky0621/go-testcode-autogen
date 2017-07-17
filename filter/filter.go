@@ -5,8 +5,6 @@ import (
 
 	"path/filepath"
 
-	"fmt"
-
 	"regexp"
 
 	"github.com/sky0621/go-testcode-autogen/config"
@@ -50,15 +48,16 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 		}
 	}
 
+	noMatch := true
+
 	inDirs := m.Filter.InDir
 	for _, inDir := range inDirs {
 		inDirExp, err := regexp.Compile(inDir)
 		if err != nil {
 			return false
 		}
-		if !inDirExp.MatchString(absPath) {
-			fmt.Printf("[IN_DIR]absPath: %v, inDir: %v\n", absPath, inDir)
-			return false
+		if inDirExp.MatchString(absPath) {
+			noMatch = false
 		}
 	}
 
@@ -68,10 +67,12 @@ func (m *FilterManager) IsTarget(path string, info os.FileInfo) bool {
 		if err != nil {
 			return false
 		}
-		if !inFileExp.MatchString(path) {
-			fmt.Printf("[IN_FILE]path: %v, inFile: %v\n", path, inFile)
-			return false
+		if inFileExp.MatchString(path) {
+			noMatch = false
 		}
+	}
+	if noMatch {
+		return false
 	}
 
 	return true
