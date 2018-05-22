@@ -12,12 +12,6 @@
 
 ##### 「vendor」配下は無視するようにしています。
 
-## 前提
-
-##### ・go の実行環境（v1.7）が存在すること
-
-##### ・vendoringツールとして glide がインストール済みであること
-
 ## 使い方
 
 ##### 1) cd $GOPATH/src/github.com/sky0621/go-testcode-autogen
