@@ -14,13 +14,12 @@
 
 ## 使い方
 
-##### 1) cd $GOPATH/src/github.com/sky0621/go-testcode-autogen
+##### 1) 以下より、対象モジュールをダウンロード
 
-##### 2) glide up
+https://github.com/sky0621/go-testcode-autogen/releases
 
-##### 3) cd $GOPATH/src/github.com/sky0621/go-testcode-autogen/cmd
-
-##### 4) go run main.go -target=../example/sampleproject
+##### 2) sh go_testcode_autogen_linux_amd64 --target golang/src/github.com/sky0621/go-testcode-autogen/_example/sampleproject/
+ -target=../example/sampleproject
 
 ###### ※「-target」にテストコードのひな形を作りたいプロジェクトのディレクトリフルパスを指定
 
